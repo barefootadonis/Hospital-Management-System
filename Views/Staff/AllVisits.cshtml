@@ -1,0 +1,78 @@
+﻿@model List<Hospital_Management_System.Models.Visit>
+
+<div class="page">
+    <div class="card">
+        <h2>Visits</h2>
+
+        <div class="lookup-header">
+            <input type="text" id="visitSearch" placeholder="Search visits..." autocomplete="off" />
+
+            <a asp-action="CreateVisit" class="btn btn-primary">
+                + Create Visit
+            </a>
+        </div>
+    </div>
+
+    <div class="card">
+        <h3>All Visits</h3>
+
+        @if (Model.Any())
+        {
+            <table class="table" id="visitTable">
+                <thead>
+                    <tr>
+                        <th>Visit ID</th>
+                        <th>Date</th>
+                        <th>Patient</th>
+                        <th>Doctor</th>
+                        <th>Appointment</th>
+                        <th>Notes</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var v in Model)
+                    {
+                        <tr>
+                            <td>@v.VisitId</td>
+                            <td>@v.VisitDateTime.ToString("dd/MM/yyyy HH:mm")</td>
+                            <td>@v.Patient.PatientFirstName @v.Patient.PatientLastName</td>
+                            <td>@v.Doctor.StaffFirstName @v.Doctor.StaffLastName</td>
+                            <td>@v.AppointmentId</td>
+                            <td>@v.Notes</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+
+            <p id="noVisitResults" style="display:none;">No matching visits found.</p>
+        }
+        else
+        {
+            <p>No visits found.</p>
+        }
+    </div>
+</div>
+
+<script>
+    const visitSearch = document.getElementById("visitSearch");
+    const visitRows = document.querySelectorAll("#visitTable tbody tr");
+    const noVisitResults = document.getElementById("noVisitResults");
+
+    visitSearch.addEventListener("keyup", function () {
+        const searchValue = this.value.toLowerCase();
+        let visibleCount = 0;
+
+        visitRows.forEach(row => {
+            const rowText = row.innerText.toLowerCase();
+
+            if (rowText.includes(searchValue)) {
+                row.style.display = "";
+                visibleCount++;
+            } else {
+                row.style.display = "none";
+            }
+        });
+
+        noVisitResults.style.display = visibleCount === 0 ? "block" : "none";
+    });
+</script>

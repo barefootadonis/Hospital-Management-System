@@ -1,0 +1,68 @@
+﻿@model List<Hospital_Management_System.Models.Patient>
+
+@{
+    ViewData["Title"] = "Patient Records Menu";
+}
+
+<div class="page">
+    <div class="card">
+        <h3>Patient Records</h3>
+
+        <form method="get">
+            <input type="hidden" name="id" value="@ViewBag.DoctorId" />
+
+            <input type="text"
+                   name="search"
+                   placeholder="Search by name or ID"
+                   class="form-control mb-3" />
+
+            <button type="submit" class="btn btn-primary mb-3">Search</button>
+        </form>
+
+        @if (Model.Any())
+        {
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Patient</th>
+                        <th>ID</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    @foreach (var patient in Model)
+                    {
+                        <tr>
+                            <td>@patient.PatientFirstName @patient.PatientLastName</td>
+                            <td>@patient.PatientId</td>
+
+                            <td>
+                                <a asp-action="PatientInformation"
+                                   asp-route-id="@patient.PatientId"
+                                   class="btn btn-sm btn-secondary">Information</a>
+
+                                <a asp-action="PatientVitals"
+                                   asp-route-id="@patient.PatientId"
+                                   class="btn btn-sm btn-secondary">Vitals</a>
+
+                                <a asp-action="PatientLabResults"
+                                   asp-route-id="@patient.PatientId"
+                                   class="btn btn-sm btn-secondary">Lab Results</a>
+
+                                <a asp-action="VisitHistory"
+                                   asp-route-id="@patient.PatientId"
+                                   class="btn btn-sm btn-secondary">Visit History</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+        else
+        {
+            <p>No patients found.</p>
+        }
+
+    </div>
+</div>

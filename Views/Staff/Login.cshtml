@@ -1,0 +1,24 @@
+﻿@{
+    Layout = "_AuthLayout";
+}
+@model LoginViewModel
+<div class="page auth-page">
+    <h2>Staff Login</h2>
+    @Html.ValidationSummary(false, "", new { @class = "validation-message" })
+
+    <form asp-action="Login" asp-controller="Staff" method="post">
+
+        <input asp-for="EmailOrId" placeholder="Email or Staff ID" required />
+        <input asp-for="Password" type="password" placeholder="Password" required />
+
+        <button type="submit" class="btn btn-primary">
+            Login
+        </button>
+
+    </form>
+
+    <p class="note">
+        Staff accounts are issued by administration.
+    </p>
+</div>
+

@@ -1,0 +1,66 @@
+﻿@model Hospital_Management_System.Models.Vitals
+@using Hospital_Management_System.Models
+@{
+    var visits = ViewBag.Visits as List<Visit>;
+}
+
+<div class="card vitals-form">
+
+    <h2>Create Vital Record</h2>
+
+    <form asp-action="CreateVitals" method="post">
+
+        <input type="hidden" asp-for="VitalsId" />
+        <input type="hidden" name="nurseId" value="@ViewBag.NurseId" />
+        <input type="hidden" name="returnUrl" value="@ViewBag.ReturnUrl" />
+
+        <div>
+            <label>Visit</label>
+            <select asp-for="VisitId" required>
+                <option value="">-- Select Visit --</option>
+                @foreach (var visit in visits)
+                {
+                    <option value="@visit.VisitId">
+                        @visit.VisitId - @visit.Patient.PatientFirstName @visit.Patient.PatientLastName
+                    </option>
+                }
+            </select>
+        </div>
+
+        <div>
+            <label>Temperature</label>
+            <input asp-for="Temperature" />
+        </div>
+
+        <div>
+            <label>Blood Pressure</label>
+            <input asp-for="BloodPressure" />
+        </div>
+
+        <div>
+            <label>Heart Rate</label>
+            <input asp-for="HeartRate" />
+        </div>
+
+        <div>
+            <label>Respiratory Rate</label>
+            <input asp-for="RespiratoryRate" />
+        </div>
+
+        <div>
+            <label>Notes</label>
+            <textarea asp-for="Notes"></textarea>
+        </div>
+
+        <div class="vitals-actions">
+            <button type="submit" name="actionType" value="Save" class="btn btn-primary">
+                Save
+            </button>
+
+            <button type="submit" name="actionType" value="Draft" class="btn btn-soft">
+                Save as Draft
+            </button>
+        </div>
+
+    </form>
+</div>

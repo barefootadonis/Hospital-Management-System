@@ -1,0 +1,56 @@
+﻿@model List<Hospital_Management_System.Models.Ticket>
+
+<div class="page">
+    <div class="card">
+        <h2>Ticket Manager</h2>
+
+        @if (Model.Any())
+        {
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Ticket</th>
+                        <th>Subject</th>
+                        <th>Description</th>
+                        <th>Priority</th>
+                        <th>Sender</th>
+                        <th>Status</th>
+                        <th>Created</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var ticket in Model)
+                    {
+                        <tr>
+                            <td>@ticket.TicketId</td>
+                            <td>@ticket.Subject</td>
+                            <td>@ticket.Description</td>
+                            <td>@ticket.Priority</td>
+                            <td>@ticket.SenderRole - @ticket.SenderId</td>
+                            <td>
+                                <form asp-action="UpdateTicketStatus" method="post" class="reset-password-form">
+                                    <input type="hidden" name="ticketId" value="@ticket.TicketId" />
+
+                                    <select name="status">
+                                        <option value="Open" selected="@(ticket.Status == "Open")">Open</option>
+                                        <option value="In Progress" selected="@(ticket.Status == "In Progress")">In Progress</option>
+                                        <option value="Resolved" selected="@(ticket.Status == "Resolved")">Resolved</option>
+                                    </select>
+
+                                    <button type="submit" class="btn btn-primary btn-sm">
+                                        Save
+                                    </button>
+                                </form>
+                            </td>
+                            <td>@ticket.CreatedAt.ToString("dd/MM/yyyy HH:mm")</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+        else
+        {
+            <p>No tickets have been submitted.</p>
+        }
+    </div>
+</div>

@@ -1,0 +1,42 @@
+﻿@model Hospital_Management_System.Models.Patient
+
+@{
+    ViewData["Title"] = "Patient Dashboard";
+}
+
+
+<div class="page">
+
+    <h2>Welcome @Model.PatientFirstName</h2>
+    <p>Patient ID: @Model.PatientId</p>
+
+    <div class="grid">
+
+        <div class="card">
+            <h3>Calendar</h3>
+            <p>View appointments and hospital events.</p>
+
+            <a asp-controller="Staff"
+                   asp-action="Calendar"
+                   asp-route-id="@Model.PatientId"
+                   asp-route-userType="Patient"
+                   class="btn btn-secondary">
+                Open Calendar
+            </a>
+        </div>
+
+        <div class="card">
+            <h3>Quick Actions</h3>
+            <p>Book an appointment with your assigned doctor.</p>
+
+            <a asp-controller="Patients"
+                   asp-action="BookAppointment"
+                   asp-route-id="@Model.PatientId"
+                   class="btn btn-primary">
+                Book Appointment
+            </a>
+        </div>
+
+    </div>
+
+</div>

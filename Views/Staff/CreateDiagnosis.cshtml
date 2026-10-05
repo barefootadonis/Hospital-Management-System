@@ -1,0 +1,39 @@
+﻿@model Hospital_Management_System.Models.Diagnosis
+@using Hospital_Management_System.Models
+
+@{
+    var visits = ViewBag.Visits as List<Visit>;
+}
+
+<div class="page">
+    <div class="card vitals-form">
+        <h2>Create Diagnosis</h2>
+
+        @Html.ValidationSummary(false, "", new { @class = "validation-message" })
+
+        <form asp-action="CreateDiagnosis" method="post">
+            <input type="hidden" name="doctorId" value="@ViewBag.DoctorId" />
+
+            <label>Visit / Patient</label>
+            <select asp-for="VisitId" required>
+                <option value="">-- Select Visit --</option>
+                @foreach (var visit in visits)
+                {
+                    <option value="@visit.VisitId">
+                        @visit.VisitId - @visit.Patient.PatientFirstName @visit.Patient.PatientLastName
+                    </option>
+                }
+            </select>
+
+            <label>Diagnosis Name</label>
+            <input asp-for="DiagnosisName" required />
+
+            <label>Description</label>
+            <textarea asp-for="Description" required></textarea>
+
+            <button type="submit" class="btn btn-primary">
+                Save Diagnosis
+            </button>
+        </form>
+    </div>
+</div>

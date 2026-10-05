@@ -1,0 +1,124 @@
+﻿@model DoctorDashboardViewModel
+
+@{
+    ViewData["Title"] = "Doctor Dashboard";
+}
+
+<div class="page">
+
+    <h2>Welcome Dr. @Model.Staff.StaffFirstName</h2>
+    <p>Staff ID: @Model.Staff.StaffId</p>
+    <p>Role: @Model.Staff.StaffRole</p>
+
+    <div class="grid">
+
+        <div class="card">
+            <h3>Work Calendar</h3>
+            <p>View appointments, meetings and work events.</p>
+            
+            <a asp-action="Calendar"
+                   asp-route-id="@Model.Staff.StaffId"
+                   asp-route-userType="Staff"
+                   class="btn btn-secondary">
+                Open Calendar
+            </a>
+        </div>
+
+        <div class="card">
+            <h3>Quick Actions</h3>
+
+            <div class="quick-actions-grid">
+
+                <a asp-action="PatientRecordsMenu"
+                       asp-route-id="@Model.Staff.StaffId"
+                       class="btn btn-primary">
+                    Patient Records
+                </a>
+
+                <a asp-action="CreateVisit"
+                       asp-route-id="@Model.Staff.StaffId"
+                       class="btn btn-secondary">
+                    Create Visit
+                </a>
+
+                <a asp-action="CreatePrescription"
+                       asp-route-id="@Model.Staff.StaffId"
+                       class="btn btn-secondary">
+                    Create Prescription
+                </a>
+
+                <a asp-action="MyTickets"
+                       asp-route-id="@Model.Staff.StaffId"
+                       class="btn btn-primary">
+                    Ticket Manager
+                </a>
+
+                <a asp-action="CreateDiagnosis"
+                       asp-route-id="@Model.Staff.StaffId"
+                       class="btn btn-secondary">
+                    Create Diagnosis
+                </a>
+
+
+            </div>
+        </div>
+
+    </div>
+
+    <div class="card">
+        <h3>Today's Appointments</h3>
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Time</th>
+                    <th>Patient</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var appointment in Model.Appointments ?? new List<Appointment>())
+                {
+                    <tr class="@(appointment.ArrivalConfirmation ? "table-success" : "")">
+                        <td>@appointment.AppointmentTime</td>
+                        <td>@appointment.Patient.PatientFirstName @appointment.Patient.PatientLastName</td>
+                        <td>
+                            @if (appointment.ArrivalConfirmation)
+                            {
+                                <span class="text-success fw-bold">Arrived</span>
+                            }
+                            else
+                            {
+                                <span class="text-warning">Waiting</span>
+                            }
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+</div>
+
+<audio id="arrivalSound" src="/sounds/notify.mp3"></audio>
+
+<script>
+    setTimeout(function () {
+        location.reload();
+    }, 15000);
+</script>
+<script>
+    let hasPlayed = false;
+
+    function checkArrivals() {
+        const arrived = document.querySelectorAll('.text-success');
+
+        if (arrived.length > 0 && !hasPlayed) {
+            const audio = document.getElementById("arrivalSound");
+            audio.play().catch(() => {}); 
+            hasPlayed = true;
+        }
+    }
+
+    checkArrivals();
+</script>

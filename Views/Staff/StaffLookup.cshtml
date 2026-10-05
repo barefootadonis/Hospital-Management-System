@@ -1,0 +1,113 @@
+﻿@model List<Hospital_Management_System.Models.Staff>
+
+<div class="page">
+
+    <div class="card">
+        <h2>Staff</h2>
+
+        <div class="lookup-header">
+            <input type="text"
+                   id="staffSearch"
+                   placeholder="Search by name, ID, role, email, phone, or status..." />
+
+            <a asp-action="Create" class="btn btn-primary">
+                + Add Staff
+            </a>
+        </div>
+    </div>
+
+    <div class="card">
+        <h3>All Staff</h3>
+
+        @if (Model.Any())
+        {
+            <table class="table" id="staffTable">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Role</th>
+                        <th>Email</th>
+                        <th>Phone</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    @foreach (var staff in Model)
+                    {
+                        <tr>
+                            <td>@staff.StaffId</td>
+                            <td>@staff.StaffFirstName @staff.StaffLastName</td>
+                            <td>@staff.StaffRole</td>
+                            <td>@staff.StaffEmail</td>
+                            <td>@staff.StaffPhoneNumber</td>
+                            <td>@staff.ActiveStatus</td>
+                            <td>
+                                <div class="table-actions">
+                                    <a asp-action="Edit"
+                                           asp-route-id="@staff.StaffId"
+                                           asp-route-returnUrl="@Context.Request.Path"
+                                           class="btn btn-primary btn-sm">
+                                        Edit
+                                    </a>
+
+                                    @if (staff.ActiveStatus == "Active")
+                                    {
+                                        <form asp-action="Deactivate" method="post">
+                                            <input type="hidden" name="id" value="@staff.StaffId" />
+                                            <button type="submit" class="btn btn-danger btn-sm">
+                                                Deactivate
+                                            </button>
+                                        </form>
+                                    }
+                                    else
+                                    {
+                                        <form asp-action="Activate" method="post">
+                                            <input type="hidden" name="id" value="@staff.StaffId" />
+                                            <button type="submit" class="btn btn-success btn-sm">
+                                                Activate
+                                            </button>
+                                        </form>
+                                    }
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+
+            <p id="noResults" style="display:none;">No matching staff found.</p>
+        }
+        else
+        {
+            <p>No staff records found.</p>
+        }
+    </div>
+
+</div>
+
+<script>
+    const searchInput = document.getElementById("staffSearch");
+    const rows = document.querySelectorAll("#staffTable tbody tr");
+    const noResults = document.getElementById("noResults");
+
+    searchInput.addEventListener("keyup", function () {
+        const searchValue = this.value.toLowerCase();
+        let visibleCount = 0;
+
+        rows.forEach(row => {
+            const rowText = row.innerText.toLowerCase();
+
+            if (rowText.includes(searchValue)) {
+                row.style.display = "";
+                visibleCount++;
+            } else {
+                row.style.display = "none";
+            }
+        });
+
+        noResults.style.display = visibleCount === 0 ? "block" : "none";
+    });
+</script>

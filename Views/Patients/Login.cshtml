@@ -1,0 +1,24 @@
+﻿@{
+    Layout = "_AuthLayout";
+}
+@model LoginViewModel
+<div class="page auth-page">
+    <h2>Patient Login</h2>
+    @Html.ValidationSummary(false, "", new { @class = "validation-message" })
+
+    <form asp-action="Login" asp-controller="Patients" method="post">
+
+        <input asp-for="EmailOrId" placeholder="Email or Patient ID" required />
+        <input asp-for="Password" type="password" placeholder="Password" required />
+
+        <button type="submit" class="btn btn-primary">
+            Login
+        </button>
+
+    </form>
+
+    <p>
+        New patient?
+        <a asp-controller="Patients" asp-action="Signup">Sign up here</a>
+    </p>
+</div>

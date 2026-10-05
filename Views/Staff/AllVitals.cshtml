@@ -1,0 +1,84 @@
+﻿@model List<Hospital_Management_System.Models.Vitals>
+
+<div class="page">
+    <div class="card">
+        <h2>Vitals</h2>
+
+        <div class="lookup-header">
+            <input type="text" id="vitalsSearch" placeholder="Search vitals..." autocomplete="off" />
+            <a asp-action="CreateVitals" class="btn btn-primary">
+                + Add Vitals
+            </a>
+        </div>
+    </div>
+
+    <div class="card">
+        <h3>All Vitals</h3>
+
+        @if (Model.Any())
+        {
+            <table class="table" id="vitalsTable">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Patient</th>
+                        <th>Visit</th>
+                        <th>Temp</th>
+                        <th>BP</th>
+                        <th>Heart Rate</th>
+                        <th>Resp Rate</th>
+                        <th>Nurse</th>
+                        <th>Draft</th>
+                        <th>Recorded</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var v in Model)
+                    {
+                        <tr>
+                            <td>@v.VitalsId</td>
+                            <td>@v.Visit.Patient.PatientFirstName @v.Visit.Patient.PatientLastName</td>
+                            <td>@v.VisitId</td>
+                            <td>@v.Temperature</td>
+                            <td>@v.BloodPressure</td>
+                            <td>@v.HeartRate</td>
+                            <td>@v.RespiratoryRate</td>
+                            <td>@v.NurseId</td>
+                            <td>@(v.IsDraft ? "Yes" : "No")</td>
+                            <td>@v.RecordedAt.ToString("dd/MM/yyyy HH:mm")</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+
+            <p id="noVitalsResults" style="display:none;">No matching vitals found.</p>
+        }
+        else
+        {
+            <p>No vitals found.</p>
+        }
+    </div>
+</div>
+
+<script>
+    const vitalsSearch = document.getElementById("vitalsSearch");
+    const vitalsRows = document.querySelectorAll("#vitalsTable tbody tr");
+    const noVitalsResults = document.getElementById("noVitalsResults");
+
+    vitalsSearch.addEventListener("keyup", function () {
+        const searchValue = this.value.toLowerCase();
+        let visibleCount = 0;
+
+        vitalsRows.forEach(row => {
+            const rowText = row.innerText.toLowerCase();
+            if (rowText.includes(searchValue)) {
+                row.style.display = "";
+                visibleCount++;
+            } else {
+                row.style.display = "none";
+            }
+        });
+
+        noVitalsResults.style.display = visibleCount === 0 ? "block" : "none";
+    });
+</script>

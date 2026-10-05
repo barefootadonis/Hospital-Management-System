@@ -1,0 +1,118 @@
+﻿@model List<Hospital_Management_System.Models.Patient>
+@{
+    var accounts = ViewBag.Accounts as List<Hospital_Management_System.Models.UserAccount>;
+}
+
+<div class="page">
+
+    <div class="card">
+        <h2>Patients</h2>
+
+        <div class="lookup-header">
+            <input type="text"
+                   id="patientSearch"
+                   placeholder="Search by name, ID, email, phone, address, or doctor ID..." />
+
+            <a asp-controller="Patients"
+                   asp-action="Signup"
+                   class="btn btn-primary">
+                + Add Patient
+            </a>
+        </div>
+    </div>
+
+    <div class="card">
+        <h3>All Patients</h3>
+
+        @if (Model.Any())
+        {
+            <table class="table" id="patientTable">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Phone</th>
+                        <th>Assigned Doctor</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    @foreach (var patient in Model)
+                    {
+                        var account = accounts.FirstOrDefault(a => a.PatientId == patient.PatientId);
+                        <tr>
+                            <td>@patient.PatientId</td>
+                            <td>@patient.PatientFirstName @patient.PatientLastName</td>
+                            <td>@patient.PatientEmail</td>
+                            <td>@patient.PatientPhoneNumber</td>
+                            <td>@patient.AssignedDoctorId</td>
+                            <td>
+                                <div class="table-actions">
+                                    <a asp-controller="Patients"
+                                           asp-action="Edit"
+                                           asp-route-id="@patient.PatientId"
+                                           asp-route-returnUrl="@Context.Request.Path"
+                                           class="btn btn-primary btn-sm">
+                                        Edit
+                                    </a>
+
+                                    @if (account != null && account.AccountStatus == "Active")
+                                    {
+                                        <form asp-controller="Staff" asp-action="DeactivatePatient" method="post">
+                                            <input type="hidden" name="id" value="@patient.PatientId" />
+                                            <button type="submit" class="btn btn-danger btn-sm">
+                                                Deactivate
+                                            </button>
+                                        </form>
+                                    }
+                                    else
+                                    {
+                                        <form asp-controller="Staff" asp-action="ActivatePatient" method="post">
+                                            <input type="hidden" name="id" value="@patient.PatientId" />
+                                            <button type="submit" class="btn btn-success btn-sm">
+                                                Activate
+                                            </button>
+                                        </form>
+                                    }
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+
+            <p id="noPatientResults" style="display:none;">No matching patients found.</p>
+        }
+        else
+        {
+            <p>No patient records found.</p>
+        }
+    </div>
+
+</div>
+
+<script>
+    const patientSearchInput = document.getElementById("patientSearch");
+    const patientRows = document.querySelectorAll("#patientTable tbody tr");
+    const noPatientResults = document.getElementById("noPatientResults");
+
+    patientSearchInput.addEventListener("keyup", function () {
+        const searchValue = this.value.toLowerCase();
+        let visibleCount = 0;
+
+        patientRows.forEach(row => {
+            const rowText = row.innerText.toLowerCase();
+
+            if (rowText.includes(searchValue)) {
+                row.style.display = "";
+                visibleCount++;
+            } else {
+                row.style.display = "none";
+            }
+        });
+
+        noPatientResults.style.display = visibleCount === 0 ? "block" : "none";
+    });
+</script>

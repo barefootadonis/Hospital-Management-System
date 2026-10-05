@@ -1,0 +1,24 @@
+﻿@model Hospital_Management_System.Models.Staff
+
+<div class="card p-4">
+
+    <h2>Staff Profile</h2>
+    <hr />
+
+    <p><strong>Staff ID:</strong> @Model.StaffId</p>
+    <p><strong>First Name:</strong> @Model.StaffFirstName</p>
+    <p><strong>Last Name:</strong> @Model.StaffLastName</p>
+    <p><strong>Other Names:</strong> @Model.StaffOtherNames</p>
+    <p><strong>Role:</strong> @Model.StaffRole</p>
+    <p><strong>Date of Birth:</strong> @Model.StaffDateOfBirth.ToShortDateString()</p>
+    <p><strong>Address:</strong> @Model.StaffAddress</p>
+    <p><strong>Phone:</strong> @Model.StaffPhoneNumber</p>
+    <p><strong>Email:</strong> @Model.StaffEmail</p>
+    <p><strong>Emergency Contact Name:</strong> @Model.StaffEmergencyContactName</p>
+    <p><strong>Emergency Contact Phone:</strong> @Model.StaffEmergencyContactPhoneNumber</p>
+    <p><strong>Status:</strong> @Model.ActiveStatus</p>
+    <p><strong>Start Date:</strong> @Model.StartDate.ToShortDateString()</p>
+
+    <hr />
+
+</div>

@@ -1,0 +1,54 @@
+﻿@model List<Hospital_Management_System.Models.Vitals>
+
+<div class="card">
+    <h2>Draft Vitals</h2>
+
+    @if (Model.Any())
+    {
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Patient</th>
+                    <th>Visit</th>
+                    <th>Recorded</th>
+                    <th>Notes</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var vital in Model)
+                {
+                    <tr>
+                        <td>@vital.Visit.Patient.PatientFirstName @vital.Visit.Patient.PatientLastName</td>
+                        <td>@vital.Visit.VisitId</td>
+                        <td>@vital.RecordedAt.ToString("dd/MM/yyyy HH:mm")</td>
+                        <td>@vital.Notes</td>
+                        <td>
+                            <div class="table-actions">
+
+                                <a asp-action="EditVitals"
+                                       asp-route-id="@vital.VitalsId"
+                                       asp-route-returnUrl="@Context.Request.Path"
+                                       class="btn btn-primary btn-sm">
+                                    Continue
+                                </a>
+
+                                <form asp-action="DeleteVitals" method="post">
+                                    <input type="hidden" name="id" value="@vital.VitalsId" />
+                                    <button type="submit" class="btn btn-secondary btn-sm">
+                                        Delete
+                                    </button>
+                                </form>
+
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <p>No draft vitals records found.</p>
+    }
+</div>

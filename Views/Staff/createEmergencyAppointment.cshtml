@@ -1,0 +1,79 @@
+﻿@model CreateAppointmentViewModel
+@using Hospital_Management_System.Models
+
+@{
+    var emergencyDoctors = ViewBag.EmergencyDoctors as List<Staff>;
+}
+
+<div class="page">
+    <div class="card vitals-form">
+        <h2>Create Emergency Appointment</h2>
+
+        @Html.ValidationSummary(false, "", new { @class = "validation-message" })
+
+        <form asp-action="CreateEmergencyAppointment" method="post">
+            <input type="hidden" name="staffId" value="@ViewBag.StaffId" />
+
+            <label>Patient</label>
+            <select asp-for="PatientId" required>
+                <option value="">-- Select Patient --</option>
+                @foreach (var patient in Model.Patients)
+                {
+                    <option value="@patient.PatientId">
+                        @patient.PatientId - @patient.PatientFirstName @patient.PatientLastName
+                    </option>
+                }
+            </select>
+
+            <label>Emergency Doctor</label>
+            <select name="emergencyDoctorId" required>
+                <option value="">-- Select Emergency Doctor --</option>
+                @foreach (var doctor in emergencyDoctors)
+                {
+                    <option value="@doctor.StaffId">
+                        @doctor.StaffId - Dr. @doctor.StaffFirstName @doctor.StaffLastName
+                    </option>
+                }
+            </select>
+
+            <label>Date</label>
+            <input asp-for="AppointmentDate" type="date" required />
+
+            <label>Time</label>
+            <select asp-for="AppointmentTime" required>
+                <option value="">-- Select Time --</option>
+                <option value="08:00">08:00</option>
+                <option value="08:30">08:30</option>
+                <option value="09:00">09:00</option>
+                <option value="09:30">09:30</option>
+                <option value="10:00">10:00</option>
+                <option value="10:30">10:30</option>
+                <option value="11:00">11:00</option>
+                <option value="11:30">11:30</option>
+                <option value="12:00">12:00</option>
+                <option value="12:30">12:30</option>
+                <option value="13:00">13:00</option>
+                <option value="13:30">13:30</option>
+                <option value="14:00">14:00</option>
+                <option value="14:30">14:30</option>
+                <option value="15:00">15:00</option>
+                <option value="15:30">15:30</option>
+                <option value="16:00">16:00</option>
+                <option value="16:30">16:30</option>
+                <option value="17:00">17:00</option>
+                <option value="17:30">17:30</option>
+                <option value="18:00">18:00</option>
+                <option value="18:30">18:30</option>
+                <option value="19:00">19:00</option>
+                <option value="19:30">19:30</option>
+            </select>
+
+            <label>Emergency Notes</label>
+            <textarea asp-for="Notes" placeholder="Reason for emergency appointment..." required></textarea>
+
+            <button type="submit" class="btn btn-primary">
+                Create Emergency Appointment
+            </button>
+        </form>
+    </div>
+</div>

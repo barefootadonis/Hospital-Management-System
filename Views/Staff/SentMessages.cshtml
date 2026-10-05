@@ -1,0 +1,36 @@
+﻿@model List<Hospital_Management_System.Models.Notification>
+
+<div class="page">
+    <div class="card">
+        <h2>Sent Messages</h2>
+
+        @if (Model.Any())
+        {
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Sent</th>
+                        <th>To</th>
+                        <th>Title</th>
+                        <th>Message</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var message in Model)
+                    {
+                        <tr>
+                            <td>@message.CreatedAt.ToString("dd/MM/yyyy HH:mm")</td>
+                            <td>@message.ReceiverType @message.ReceiverId</td>
+                            <td>@message.Title</td>
+                            <td>@message.Message</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+        else
+        {
+            <p>No sent messages.</p>
+        }
+    </div>
+</div>

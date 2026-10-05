@@ -1,0 +1,50 @@
+﻿@model Hospital_Management_System.Models.Device
+@using Hospital_Management_System.Models
+
+@{
+    ViewData["Title"] = "Edit Device";
+    var staffList = ViewBag.Staff as List<Staff>;
+}
+
+<div class="page">
+    <div class="card vitals-form">
+        <h2>Edit Device</h2>
+
+        <form asp-action="EditDevice" method="post">
+            <input type="hidden" asp-for="DeviceId" />
+            <input type="hidden" name="returnUrl" value="@ViewBag.ReturnUrl" />
+
+            <label>Device Name</label>
+            <input asp-for="DeviceName" required />
+
+            <label>Device Type</label>
+            <input asp-for="DeviceType" required />
+
+            <label>Status</label>
+            <select asp-for="Status" required>
+                <option value="Available">Available</option>
+                <option value="In Use">In Use</option>
+                <option value="Faulty">Faulty</option>
+                <option value="Under Maintenance">Under Maintenance</option>
+            </select>
+
+            <label>Assigned Staff</label>
+            <select asp-for="AssignedStaffId">
+                <option value="">Not assigned to staff</option>
+                @foreach (var staff in staffList)
+                {
+                    <option value="@staff.StaffId">
+                        @staff.StaffId - @staff.StaffFirstName @staff.StaffLastName (@staff.StaffRole)
+                    </option>
+                }
+            </select>
+
+            <label>Room</label>
+            <input asp-for="Room" placeholder="e.g. Ward A - Room 2" />
+
+            <button type="submit" class="btn btn-primary">
+                Save Changes
+            </button>
+        </form>
+    </div>
+</div>

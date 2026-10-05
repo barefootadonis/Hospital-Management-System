@@ -1,0 +1,47 @@
+﻿@model Hospital_Management_System.Models.LabTestResult
+@using Hospital_Management_System.Models
+
+@{
+    var visits = ViewBag.Visits as List<Visit>;
+}
+
+<div class="card vitals-form">
+    <h2>Upload Lab Result</h2>
+
+    <form asp-action="UploadLabResult" method="post">
+        <input type="hidden" asp-for="TestId" />
+        <input type="hidden" name="labTechId" value="@ViewBag.LabTechId" />
+        <input type="hidden" name="returnUrl" value="@ViewBag.ReturnUrl" />
+
+        <div>
+            <label>Visit / Patient</label>
+            <select asp-for="VisitId" required>
+                <option value="">-- Select Visit --</option>
+                @foreach (var visit in visits)
+                {
+                    <option value="@visit.VisitId">
+                        @visit.VisitId - @visit.Patient.PatientFirstName @visit.Patient.PatientLastName
+                    </option>
+                }
+            </select>
+        </div>
+
+        <div>
+            <label>Test Type</label>
+            <input asp-for="TestType" placeholder="Blood test, Allergy panel, X-ray..." required />
+        </div>
+        <div>
+            <textarea asp-for="ResultDetails" placeholder="Enter test result details..." required></textarea>
+        </div>
+
+        <div class="vitals-actions">
+            <button type="submit" name="actionType" value="Completed" class="btn btn-primary">
+                Upload Result
+            </button>
+
+            <button type="submit" name="actionType" value="Pending" class="btn btn-soft">
+                Save as Draft
+            </button>
+        </div>
+    </form>
+</div>

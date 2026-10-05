@@ -1,0 +1,28 @@
+﻿@model Hospital_Management_System.Models.Ticket
+
+<div class="page">
+    <div class="card vitals-form">
+        <h2>Create Support Ticket</h2>
+
+        <form asp-action="CreateTicket" method="post">
+            <input type="hidden" name="staffId" value="@ViewBag.StaffId" />
+
+            <input asp-for="Subject" placeholder="Subject" required />
+
+            <textarea asp-for="Description"
+                      placeholder="Describe the issue..."
+                      required></textarea>
+
+            <select asp-for="Priority" required>
+                <option value="">-- Select Priority --</option>
+                <option value="Low">Low</option>
+                <option value="Medium">Medium</option>
+                <option value="High">High</option>
+            </select>
+
+            <button type="submit" class="btn btn-primary">
+                Submit Ticket
+            </button>
+        </form>
+    </div>
+</div>

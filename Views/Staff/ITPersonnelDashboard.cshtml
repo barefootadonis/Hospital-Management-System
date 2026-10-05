@@ -1,0 +1,53 @@
+﻿@model Hospital_Management_System.Models.Staff
+
+@{
+    ViewData["Title"] = "IT Personnel Dashboard";
+}
+
+<div class="page">
+
+    <h2>Welcome @Model.StaffFirstName</h2>
+    <p>Staff ID: @Model.StaffId</p>
+    <p>Role: IT Personnel</p>
+
+    <div class="grid">
+
+        <div class="card">
+            <h3>Work Calendar</h3>
+            <p>View appointments, meetings and work events.</p>
+
+            <a asp-action="Calendar"
+                   asp-route-id="@Model.StaffId"
+                   asp-route-userType="Staff"
+                   class="btn btn-secondary">
+                Open Calendar
+            </a>
+        </div>
+
+        <div class="card">
+            <h3>Quick Actions</h3>
+
+            <div class="quick-actions-grid mt-3">
+
+                <a asp-action="StaffLookup" class="btn btn-primary">
+                    Add New Staff
+                </a>
+
+                <a asp-action="PasswordReset" class="btn btn-secondary">
+                    Password Reset
+                </a>
+
+                <a asp-action="TicketManager" class="btn btn-secondary">
+                    Ticket Manager
+                </a>
+
+                <a asp-action="DeviceManagement" class="btn btn-primary">
+                    Device Management
+                </a>
+
+            </div>
+        </div>
+
+    </div>
+
+</div>

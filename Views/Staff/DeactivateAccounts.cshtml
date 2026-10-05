@@ -1,0 +1,53 @@
+﻿@model List<Hospital_Management_System.Models.UserAccount>
+
+@{
+    ViewData["Title"] = "Deactivated Accounts";
+}
+
+<div class="page">
+    <div class="card">
+        <h2>Deactivated Accounts</h2>
+        <p>Staff and patient accounts that are no longer active.</p>
+
+        @if (Model.Any())
+        {
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Account ID</th>
+                        <th>User</th>
+                        <th>Role</th>
+                        <th>Email</th>
+                        <th>Status</th>
+                        <th>Linked ID</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var account in Model)
+                    {
+                        var name = account.Staff != null
+                            ? account.Staff.StaffFirstName + " " + account.Staff.StaffLastName
+                            : account.Patient != null
+                                ? account.Patient.PatientFirstName + " " + account.Patient.PatientLastName
+                                : "Unknown";
+
+                        var linkedId = account.StaffId ?? account.PatientId;
+
+                        <tr>
+                            <td>@account.AccountId</td>
+                            <td>@name</td>
+                            <td>@account.Role</td>
+                            <td>@account.Email</td>
+                            <td>@account.AccountStatus</td>
+                            <td>@linkedId</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+        else
+        {
+            <p>No deactivated accounts found.</p>
+        }
+    </div>
+</div>

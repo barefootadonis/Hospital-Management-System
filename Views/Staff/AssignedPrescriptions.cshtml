@@ -1,0 +1,56 @@
+﻿@model List<Hospital_Management_System.Models.Prescription>
+
+<div class="page">
+    <div class="card">
+        <h2>Assigned Prescriptions</h2>
+
+        @if (Model.Any())
+        {
+            <table class="table prescription-table">
+                <thead>
+                    <tr>
+                        <th>Prescription ID</th>
+                        <th>Patient</th>
+                        <th>Visit ID</th>
+                        <th>Prescription</th>
+                        <th>Notes</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var prescription in Model)
+                    {
+                        <tr>
+                            <td>@prescription.PrescriptionId</td>
+                            <td>@prescription.Visit.Patient.PatientFirstName @prescription.Visit.Patient.PatientLastName</td>
+                            <td>@prescription.VisitId</td>
+                            <td>@prescription.PrescriptionText</td>
+                            <td>@prescription.Notes</td>
+                            <td>
+                                <form asp-action="UpdatePrescriptionStatus" method="post" class="d-flex gap-2 align-items-center">
+                                    <input type="hidden" name="prescriptionId" value="@prescription.PrescriptionId" />
+                                    <input type="hidden" name="staffId" value="@ViewBag.CurrentUserId" />
+
+                                    <select name="status" class="form-select form-select-sm w-auto">
+                                        <option value="Pending" selected="@(prescription.Status == "Pending")">Pending</option>
+                                        <option value="Dispensed" selected="@(prescription.Status == "Dispensed")">Dispensed</option>
+                                        <option value="Cancelled" selected="@(prescription.Status == "Cancelled")">Cancelled</option>
+                                        <option value="Out of Stock" selected="@(prescription.Status == "Out of Stock")">Out of Stock</option>
+                                    </select>
+
+                                    <button type="submit" class="btn btn-primary btn-sm">
+                                        Save
+                                    </button>
+                                </form>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+        else
+        {
+            <p>No prescriptions assigned to you.</p>
+        }
+    </div>
+</div>

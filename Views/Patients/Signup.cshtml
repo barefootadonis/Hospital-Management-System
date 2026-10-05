@@ -1,0 +1,34 @@
+﻿@{
+    Layout = "_AuthLayout";
+}
+@model Patient
+
+<div class="page auth-page">
+    <h2>Patient Sign Up</h2>
+    @Html.ValidationSummary(false, "", new { @class = "validation-message" })
+
+    <form asp-action="Create" asp-controller="Patients" method="post" autocomplete="off">
+        <input asp-for="PatientFirstName" placeholder="First name" autocomplete="off" required />
+        <input asp-for="PatientLastName" placeholder="Last name" autocomplete="off" required />
+        <input asp-for="PatientOtherNames" placeholder="Other names" autocomplete="off" required/>
+        <input asp-for="PatientDateOfBirth" type="date" required />
+        <input asp-for="PatientEmail" placeholder="Email" type="email" autocomplete="off" required />
+        <input asp-for="PatientPhoneNumber" placeholder="Phone number" autocomplete="off" required />
+        <input asp-for="PatientAddress" placeholder="Address" autocomplete="off" required />
+        <input asp-for="PatientEmergencyContactName" placeholder="Emergency contact name" autocomplete="off" required />
+        <input asp-for="PatientEmergencyContactPhoneNumber" placeholder="Emergency contact phone" autocomplete="off" required />
+
+        <!-- UserAccount data -->
+        <input name="Password"
+               type="password"
+               placeholder="Password"
+               autocomplete="new-password"
+               required />
+
+        <button type="submit" class="btn btn-primary">
+            Create Account
+        </button>
+
+    </form>
+</div>
+

@@ -1,0 +1,19 @@
+﻿@model Hospital_Management_System.Models.Staff
+
+@{
+    ViewData["Title"] = "Nurse Dashboard";
+}
+<div class="page">
+<h2>Vitals Menu</h2>
+    <div class="grid">
+        <div class="card">
+            <a asp-action="CreateVitals" asp-route-id="@Model.StaffId" class="btn btn-primary">Create Vital Record</a>
+        </div>
+        <div class="card">
+            <a asp-action="DraftVitals" asp-route-id="@Model.StaffId" class="btn btn-warning">Draft Records</a>
+        </div>
+        <div class="card">
+            <a asp-action="PastVitals" asp-route-id="@Model.StaffId" class="btn btn-secondary">Past Vital Records</a>
+        </div>
+    </div>
+</div>

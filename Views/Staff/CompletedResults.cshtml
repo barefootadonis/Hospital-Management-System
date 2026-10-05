@@ -1,0 +1,38 @@
+﻿@model List<Hospital_Management_System.Models.LabTestResult>
+
+<div class="card">
+    <h2>Completed Lab Results</h2>
+
+    @if (Model.Any())
+    {
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Test ID</th>
+                    <th>Patient</th>
+                    <th>Test Type</th>
+                    <th>Result Details</th>
+                    <th>Lab Technician</th>
+                    <th>Uploaded</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var test in Model)
+                {
+                    <tr>
+                        <td>@test.TestId</td>
+                        <td>@test.Visit.Patient.PatientFirstName @test.Visit.Patient.PatientLastName</td>
+                        <td>@test.TestType</td>
+                        <td>@test.ResultDetails</td>
+                        <td>@test.LabTech.StaffFirstName @test.LabTech.StaffLastName</td>
+                        <td>@test.UploadDate.ToString("dd/MM/yyyy HH:mm")</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <p>No completed lab results found.</p>
+    }
+</div>

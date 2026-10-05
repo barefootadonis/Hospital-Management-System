@@ -1,0 +1,44 @@
+﻿@model List<Hospital_Management_System.Models.LabTestResult>
+
+<div class="card">
+    <h2>Pending Lab Results</h2>
+
+    @if (Model.Any())
+    {
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Test ID</th>
+                    <th>Patient</th>
+                    <th>Test Type</th>
+                    <th>Last Saved</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var test in Model)
+                {
+                    <tr>
+                        <td>@test.TestId</td>
+                        <td>@test.Visit.Patient.PatientFirstName @test.Visit.Patient.PatientLastName</td>
+                        <td>@test.TestType</td>
+                        <td>@test.UploadDate.ToString("dd/MM/yyyy HH:mm")</td>
+                        <td>
+                            <a asp-action="EditLabResult"
+                                   asp-route-id="@test.TestId"
+                                   asp-route-returnUrl="@Context.Request.Path"
+                                   class="btn btn-primary btn-sm">
+                                Continue
+                            </a>
+                        </td>
+
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <p>No pending lab results found.</p>
+    }
+</div>

@@ -1,0 +1,35 @@
+﻿@{
+    ViewData["Title"] = "Database Options";
+}
+
+<div class="page">
+    <div class="card">
+        <h3>Database Options</h3>
+        <p>Select the records you want to view or manage.</p>
+
+        <div class="quick-actions-grid mt-3">
+
+                <a asp-action="StaffLookup" class="btn btn-secondary">Staff</a>
+
+                <a asp-action="PatientLookup" class="btn btn-primary">Patients</a>
+
+                <a asp-action="AllAppointments" class="btn btn-secondary">Appointments</a>
+
+                <a asp-action="AllVisits" class="btn btn-primary">Visits</a>
+
+                <a asp-action="AllPrescriptions" class="btn btn-secondary">Prescriptions</a>
+
+                <a asp-action="AllLabResults" class="btn btn-primary">Lab Results</a>
+
+                <a asp-action="AllVitals" class="btn btn-secondary">Vitals</a>
+
+                <a asp-action="DeviceManagement" class="btn btn-primary">Devices</a>
+
+                <a asp-action="AllTickets" class="btn btn-secondary">Tickets</a>
+
+                <a asp-action="AllNotifications" class="btn btn-primary">Notifications</a>
+
+
+        </div>
+        </div>
+</div>

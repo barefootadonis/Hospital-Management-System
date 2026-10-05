@@ -1,0 +1,52 @@
+﻿@model List<Device>
+
+<div class="page">
+    <h2>Device Management</h2>
+
+    <div class="lookup-header">
+        <a asp-action="CreateDevice" class="btn btn-primary">Add Device</a>
+    </div>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Type</th>
+                <th>Status</th>
+                <th>Assigned To</th>
+                <th>Room</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            @foreach (var d in Model)
+            {
+                <tr>
+                    <td>@d.DeviceId</td>
+                    <td>@d.DeviceName</td>
+                    <td>@d.DeviceType</td>
+                    <td>@d.Status</td>
+
+                    <td>
+                        @(d.AssignedStaff != null
+                            ? d.AssignedStaff.StaffFirstName + " " + d.AssignedStaff.StaffLastName
+                            : "-")
+                    </td>
+
+                    <td>@(d.Room ?? "-")</td>
+
+                    <td>
+                        <a asp-action="EditDevice"
+                               asp-route-id="@d.DeviceId"
+                               asp-route-returnUrl="@Context.Request.Path"
+                               class="btn btn-secondary btn-sm">
+                            Edit
+                        </a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

@@ -1,0 +1,19 @@
+﻿@model Hospital_Management_System.Models.Patient
+
+<div class="page">
+    <div class="card">
+        <h3>Patient Information</h3>
+
+        <p><strong>Name:</strong> @Model.PatientFirstName @Model.PatientLastName</p>
+        <p><strong>ID:</strong> @Model.PatientId</p>
+        <p><strong>DOB:</strong> @Model.PatientDateOfBirth.ToString("dd/MM/yyyy")</p>
+        <p><strong>Phone:</strong> @Model.PatientPhoneNumber</p>
+        <p><strong>Email:</strong> @Model.PatientEmail</p>
+        <p><strong>Address:</strong> @Model.PatientAddress</p>
+
+        <p>
+            <strong>Doctor:</strong>
+            @Model.AssignedDoctor?.StaffFirstName @Model.AssignedDoctor?.StaffLastName
+        </p>
+    </div>
+</div>

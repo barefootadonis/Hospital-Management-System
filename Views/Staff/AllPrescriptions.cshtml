@@ -1,0 +1,80 @@
+﻿@model List<Hospital_Management_System.Models.Prescription>
+
+<div class="page">
+    <div class="card">
+        <h2>Prescriptions</h2>
+
+        <div class="lookup-header">
+            <input type="text" id="prescriptionSearch" placeholder="Search prescriptions..." autocomplete="off" />
+            <a asp-action="CreatePrescription" class="btn btn-primary">
+                + Create Prescription
+            </a>
+        
+        </div>
+
+    </div>
+
+    <div class="card">
+        <h3>All Prescriptions</h3>
+
+        @if (Model.Any())
+        {
+            <table class="table prescription-table" id="prescriptionTable">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Patient</th>
+                        <th>Visit</th>
+                        <th>Prescription</th>
+                        <th>Notes</th>
+                        <th>Status</th>
+                        <th>Pharmacist</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var p in Model)
+                    {
+                        <tr>
+                            <td>@p.PrescriptionId</td>
+                            <td>@p.Visit.Patient.PatientFirstName @p.Visit.Patient.PatientLastName</td>
+                            <td>@p.VisitId</td>
+                            <td>@p.PrescriptionText</td>
+                            <td>@p.Notes</td>
+                            <td>@p.Status</td>
+                            <td>@p.PharmacistId</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+
+            <p id="noPrescriptionResults" style="display:none;">No matching prescriptions found.</p>
+        }
+        else
+        {
+            <p>No prescriptions found.</p>
+        }
+    </div>
+</div>
+
+<script>
+    const prescriptionSearch = document.getElementById("prescriptionSearch");
+    const prescriptionRows = document.querySelectorAll("#prescriptionTable tbody tr");
+    const noPrescriptionResults = document.getElementById("noPrescriptionResults");
+
+    prescriptionSearch.addEventListener("keyup", function () {
+        const searchValue = this.value.toLowerCase();
+        let visibleCount = 0;
+
+        prescriptionRows.forEach(row => {
+            const rowText = row.innerText.toLowerCase();
+            if (rowText.includes(searchValue)) {
+                row.style.display = "";
+                visibleCount++;
+            } else {
+                row.style.display = "none";
+            }
+        });
+
+        noPrescriptionResults.style.display = visibleCount === 0 ? "block" : "none";
+    });
+</script>

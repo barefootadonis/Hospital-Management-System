@@ -1,0 +1,96 @@
+﻿@using Microsoft.AspNetCore.Http
+@{
+    var currentUserId = ViewBag.CurrentUserId ?? Context.Session.GetString("UserId");
+    var userType = ViewBag.UserType ?? Context.Session.GetString("UserType");
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
+    <title>@ViewData["Title"] - Hospital Management System</title>
+
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+</head>
+<body>
+
+    <header>
+        <nav class="topbar d-flex justify-content-between align-items-center">
+
+            <div class="d-flex align-items-center gap-3">
+                <a asp-controller="Dashboard" asp-action="Index" class="d-flex align-items-center gap-3 text-decoration-none">
+                    <img src="~/css/hmslogo.svg" style="height:40px;" />
+                    <span class="brand">Hospital Management System</span>
+                </a>
+            </div>
+
+            <div class="d-flex align-items-center gap-4 nav-icons">
+
+                @if (userType == "Staff")
+                {
+                    <a asp-controller="Staff"
+                           asp-action="Profile"
+                           asp-route-id="@currentUserId">
+                        <i class="bi bi-person-circle"></i>
+                    </a>
+                }
+                else if (userType == "Patient")
+                {
+                    <a asp-controller="Patients"
+                           asp-action="Profile"
+                           asp-route-id="@currentUserId">
+                        <i class="bi bi-person-circle"></i>
+                    </a>
+                }
+
+                @if (currentUserId != null && userType != null)
+                {
+                    <a asp-controller="Staff"
+                           asp-action="Notifications"
+                           asp-route-id="@currentUserId"
+                           asp-route-userType="@userType"
+                           title="Notifications"
+                           class="notification-icon">
+                        <i class="bi bi-chat-dots"></i>
+                        @await Component.InvokeAsync("UnreadNotifications", new { id = currentUserId, userType = userType })
+                    </a>
+                }
+
+                @if (userType == "Staff")
+                {
+                    <a asp-controller="Staff" asp-action="Logout" title="Logout">
+                        <i class="bi bi-box-arrow-right"></i>
+                    </a>
+                }
+                else if (userType == "Patient")
+                {
+                    <a asp-controller="Patients" asp-action="Logout" title="Logout">
+                        <i class="bi bi-box-arrow-right"></i>
+                    </a>
+                }
+
+            </div>
+
+
+        </nav>
+    </header>
+
+    <main class="main-content dashboard-page">
+        <div class="app-shell dashboard-shell">
+            @RenderBody()
+        </div>
+    </main>
+
+    <footer class="footer">
+        <p>&copy; 2026 - Hospital Management System</p>
+    </footer>
+
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

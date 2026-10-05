@@ -1,0 +1,80 @@
+﻿@model List<Hospital_Management_System.Models.LabTestResult>
+
+<div class="page">
+    <div class="card">
+        <h2>Lab Results</h2>
+
+        <div class="lookup-header">
+            <input type="text" id="labSearch" placeholder="Search lab results..." autocomplete="off" />
+            <a asp-action="UploadLabResult" class="btn btn-primary">
+                + Add Lab Result
+            </a>
+        </div>
+    </div>
+
+    <div class="card">
+        <h3>All Lab Results</h3>
+
+        @if (Model.Any())
+        {
+            <table class="table" id="labTable">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Patient</th>
+                        <th>Visit</th>
+                        <th>Test Type</th>
+                        <th>Details</th>
+                        <th>Status</th>
+                        <th>Lab Tech</th>
+                        <th>Result Date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var l in Model)
+                    {
+                        <tr>
+                            <td>@l.TestId</td>
+                            <td>@l.Visit.Patient.PatientFirstName @l.Visit.Patient.PatientLastName</td>
+                            <td>@l.VisitId</td>
+                            <td>@l.TestType</td>
+                            <td>@l.ResultDetails</td>
+                            <td>@l.Status</td>
+                            <td>@l.LabTechId</td>
+                            <td>@l.ResultDate.ToString("dd/MM/yyyy")</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+
+            <p id="noLabResults" style="display:none;">No matching lab results found.</p>
+        }
+        else
+        {
+            <p>No lab results found.</p>
+        }
+    </div>
+</div>
+
+<script>
+    const labSearch = document.getElementById("labSearch");
+    const labRows = document.querySelectorAll("#labTable tbody tr");
+    const noLabResults = document.getElementById("noLabResults");
+
+    labSearch.addEventListener("keyup", function () {
+        const searchValue = this.value.toLowerCase();
+        let visibleCount = 0;
+
+        labRows.forEach(row => {
+            const rowText = row.innerText.toLowerCase();
+            if (rowText.includes(searchValue)) {
+                row.style.display = "";
+                visibleCount++;
+            } else {
+                row.style.display = "none";
+            }
+        });
+
+        noLabResults.style.display = visibleCount === 0 ? "block" : "none";
+    });
+</script>

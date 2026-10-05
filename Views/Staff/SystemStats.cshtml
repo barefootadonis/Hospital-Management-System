@@ -1,0 +1,95 @@
+﻿@{
+    ViewData["Title"] = "System Stats";
+}
+
+<div class="page">
+
+    <div class="card">
+        <h2>System Stats</h2>
+        <p>Overview of weekly and year-round hospital activity.</p>
+    </div>
+
+    <div class="card">
+        <h3>Weekly Stats</h3>
+
+        <div class="grid">
+            <div class="card">
+                <h4>Appointments</h4>
+                <p class="stat-number">@ViewBag.WeeklyAppointments</p>
+            </div>
+
+            <div class="card">
+                <h4>Visits</h4>
+                <p class="stat-number">@ViewBag.WeeklyVisits</p>
+            </div>
+
+            <div class="card">
+                <h4>Lab Results</h4>
+                <p class="stat-number">@ViewBag.WeeklyLabResults</p>
+            </div>
+
+            <div class="card">
+                <h4>Vitals Recorded</h4>
+                <p class="stat-number">@ViewBag.WeeklyVitals</p>
+            </div>
+
+            <div class="card">
+                <h4>Missed Appointments</h4>
+                <p class="stat-number text-danger">
+                    @ViewBag.WeeklyLostAppointments
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <h3>Year-Round Stats</h3>
+
+        <div class="grid">
+            <div class="card">
+                <h4>Appointments This Year</h4>
+                <p class="stat-number">@ViewBag.YearAppointments</p>
+            </div>
+
+            <div class="card">
+                <h4>New Patients This Year</h4>
+                <p class="stat-number">@ViewBag.YearPatients</p>
+            </div>
+
+            <div class="card">
+                <h4>Visits This Year</h4>
+                <p class="stat-number">@ViewBag.YearVisits</p>
+            </div>
+
+            <div class="card">
+                <h4>Active Staff</h4>
+                <p class="stat-number">@ViewBag.ActiveStaff</p>
+            </div>
+
+            <div class="card">
+                <h4>Inactive Staff</h4>
+                <p class="stat-number">@ViewBag.InactiveStaff</p>
+            </div>
+
+            <div class="card">
+                <h4>Most Active Doctor</h4>
+                <p>@ViewBag.TopDoctor</p>
+            </div>
+
+            <div class="card">
+                <h4>Missed Appointments (Year)</h4>
+                <p class="stat-number text-danger">
+                    @ViewBag.YearLostAppointments
+                </p>
+            </div>
+
+            <div class="card">
+                <h4>Missed Rate</h4>
+                <p class="stat-number text-danger">
+                    @String.Format("{0:0}%", ViewBag.MissedRate)
+                </p>
+            </div>
+        </div>
+    </div>
+
+</div>

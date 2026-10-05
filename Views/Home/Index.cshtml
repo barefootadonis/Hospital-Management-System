@@ -1,0 +1,18 @@
+﻿@{
+    Layout = "_AuthLayout";
+}
+<div class="page">
+    <div class="card">
+        <h2>Welcome</h2>
+        <p>Please select your role:</p>
+
+        <a class="btn btn-primary" asp-controller="Patients" asp-action="Login">
+            I am a Patient
+        </a>
+
+        <a class="btn btn-secondary" asp-controller="Staff" asp-action="Login">
+            I am Staff
+        </a>
+
+    </div>
+</div>

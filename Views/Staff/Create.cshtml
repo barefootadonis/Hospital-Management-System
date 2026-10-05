@@ -1,0 +1,70 @@
+﻿@model Hospital_Management_System.Models.Staff
+
+<div class="page">
+    <div class="card vitals-form">
+        <h2>Add New Staff</h2>
+
+        @Html.ValidationSummary(false, "", new { @class = "validation-message" })
+
+        <form asp-action="Create" asp-controller="Staff" method="post" autocomplete="off">
+
+            <input id="staffIdPreview"
+                   placeholder="Staff ID will be generated"
+                   readonly />
+
+            <input asp-for="StaffFirstName" placeholder="First name" required />
+            <input asp-for="StaffLastName" placeholder="Last name" required />
+            <input asp-for="StaffOtherNames" placeholder="Other names" />
+
+            <select asp-for="StaffRole" id="roleSelect" required>
+                <option value="">-- Select Role --</option>
+                <option value="Doctor">Doctor</option>
+                <option value="Nurse">Nurse</option>
+                <option value="Lab Technician">Lab Technician</option>
+                <option value="Receptionist">Receptionist</option>
+                <option value="Pharmacist">Pharmacist</option>
+                <option value="IT Personnel">IT Personnel</option>
+                <option value="System Administrator">System Administrator</option>
+                <option value="Emergency Doctor">Emergency Doctor</option>
+            </select>
+
+            <input asp-for="StaffDateOfBirth" type="date" required />
+            <input asp-for="StaffEmail" type="email" placeholder="Email" autocomplete="off" required />
+            <input asp-for="StaffPhoneNumber" placeholder="Phone number" required />
+            <input asp-for="StaffAddress" placeholder="Address" required />
+            <input asp-for="StaffEmergencyContactName" placeholder="Emergency contact name" required />
+            <input asp-for="StaffEmergencyContactPhoneNumber" placeholder="Emergency contact phone" required />
+
+            <input name="Password"
+                   type="password"
+                   placeholder="Temporary password"
+                   autocomplete="new-password"
+                   required />
+
+            <button type="submit" class="btn btn-primary">
+                Add Staff Member
+            </button>
+
+        </form>
+    </div>
+</div>
+
+<script>
+    const nextIds = {
+        "Doctor": "@ViewBag.NextIds["Doctor"]",
+        "Nurse": "@ViewBag.NextIds["Nurse"]",
+        "Lab Technician": "@ViewBag.NextIds["Lab Technician"]",
+        "Receptionist": "@ViewBag.NextIds["Receptionist"]",
+        "Pharmacist": "@ViewBag.NextIds["Pharmacist"]",
+        "IT Personnel": "@ViewBag.NextIds["IT Personnel"]",
+        "System Administrator": "@ViewBag.NextIds["System Administrator"]",
+        "Emergency Doctor": "@ViewBag.NextIds["Emergency Doctor"]"
+    };
+
+    const roleSelect = document.getElementById("roleSelect");
+    const staffIdPreview = document.getElementById("staffIdPreview");
+
+    roleSelect.addEventListener("change", function () {
+        staffIdPreview.value = nextIds[this.value] || "";
+    });
+</script>

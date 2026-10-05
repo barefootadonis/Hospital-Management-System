@@ -1,0 +1,89 @@
+﻿@model List<Hospital_Management_System.Models.Appointment>
+
+<div class="page">
+    <div class="card">
+        <h2>Appointments</h2>
+
+        <div class="lookup-header">
+            <input type="text" id="appointmentSearch" placeholder="Search appointments..." autocomplete="off" />
+
+            <a asp-action="CreateAppointment" class="btn btn-primary">
+                + Create Appointment
+            </a>
+        </div>
+    </div>
+
+    <div class="card">
+        <h3>All Appointments</h3>
+
+        @if (Model.Any())
+        {
+            <table class="table" id="appointmentTable">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Date</th>
+                        <th>Time</th>
+                        <th>Patient</th>
+                        <th>Doctor</th>
+                        <th>Status</th>
+                        <th>Arrived</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var a in Model)
+                    {
+                        <tr>
+                            <td>@a.AppointmentId</td>
+                            <td>@a.AppointmentDate.ToString("dd/MM/yyyy")</td>
+                            <td>@a.AppointmentTime</td>
+                            <td>@a.Patient.PatientFirstName @a.Patient.PatientLastName</td>
+                            <td>@a.Doctor.StaffFirstName @a.Doctor.StaffLastName</td>
+                            <td>@a.AppointmentStatus</td>
+                            <td>@(a.ArrivalConfirmation ? "Yes" : "No")</td>
+                            <td>
+                                <a asp-action="EditAppointment"
+                                       asp-route-id="@a.AppointmentId"
+                                       asp-route-returnUrl="@Context.Request.Path"
+                                       class="btn btn-primary btn-sm">
+                                    Edit
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+
+            <p id="noAppointmentResults" style="display:none;">No matching appointments found.</p>
+        }
+        else
+        {
+            <p>No appointments found.</p>
+        }
+    </div>
+</div>
+
+<script>
+    const appointmentSearch = document.getElementById("appointmentSearch");
+    const appointmentRows = document.querySelectorAll("#appointmentTable tbody tr");
+    const noAppointmentResults = document.getElementById("noAppointmentResults");
+
+    appointmentSearch.addEventListener("keyup", function () {
+        const searchValue = this.value.toLowerCase();
+        let visibleCount = 0;
+
+        appointmentRows.forEach(row => {
+            const rowText = row.innerText.toLowerCase();
+
+            if (rowText.includes(searchValue)) {
+                row.style.display = "";
+                visibleCount++;
+            } else {
+                row.style.display = "none";
+            }
+        });
+
+        noAppointmentResults.style.display = visibleCount === 0 ? "block" : "none";
+    });
+</script>

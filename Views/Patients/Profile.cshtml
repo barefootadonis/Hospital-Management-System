@@ -1,0 +1,33 @@
+﻿@model Hospital_Management_System.Models.Patient
+
+<div class="card p-4">
+
+    <h2>Patient Profile</h2>
+    <hr />
+
+    <p><strong>Patient ID:</strong> @Model.PatientId</p>
+    <p><strong>First Name:</strong> @Model.PatientFirstName</p>
+    <p><strong>Last Name:</strong> @Model.PatientLastName</p>
+    <p><strong>Other Names:</strong> @Model.PatientOtherNames</p>
+    <p><strong>Date of Birth:</strong> @Model.PatientDateOfBirth.ToShortDateString()</p>
+    <p><strong>Address:</strong> @Model.PatientAddress</p>
+    <p><strong>Phone:</strong> @Model.PatientPhoneNumber</p>
+    <p><strong>Email:</strong> @Model.PatientEmail</p>
+    <p><strong>Emergency Contact Name:</strong> @Model.PatientEmergencyContactName</p>
+    <p><strong>Emergency Contact Phone:</strong> @Model.PatientEmergencyContactPhoneNumber</p>
+    <p><strong>Creation Date:</strong> @Model.CreationDate.ToShortDateString()</p>
+    <p>
+        <strong>Assigned Doctor:</strong>
+        @Model.AssignedDoctor?.StaffFirstName
+        @Model.AssignedDoctor?.StaffLastName
+    </p>
+
+    <hr />
+
+    <a asp-action="Edit"
+       asp-route-id="@Model.PatientId"
+       class="btn btn-primary">
+        Edit Profile
+    </a>
+
+</div>

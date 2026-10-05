@@ -1,0 +1,94 @@
+﻿@model Hospital_Management_System.Models.Appointment
+@using Hospital_Management_System.Models
+
+@{
+    var patients = ViewBag.Patients as List<Patient>;
+    var doctors = ViewBag.Doctors as List<Staff>;
+}
+
+<div class="page">
+    <div class="card vitals-form">
+        <h2>Edit Appointment</h2>
+
+        @Html.ValidationSummary(false, "", new { @class = "validation-message" })
+
+        <form asp-action="EditAppointment" method="post">
+            <input type="hidden" name="returnUrl" value="@ViewBag.ReturnUrl" />
+            <input type="hidden" asp-for="AppointmentId" />
+            <input type="hidden" asp-for="CreationDate" />
+
+            <label>Patient</label>
+            <select asp-for="PatientId" required>
+                @foreach (var patient in patients)
+                {
+                    <option value="@patient.PatientId">
+                        @patient.PatientId - @patient.PatientFirstName @patient.PatientLastName
+                    </option>
+                }
+            </select>
+
+            <label>Doctor</label>
+            <select asp-for="DoctorId" required>
+                @foreach (var doctor in doctors)
+                {
+                    <option value="@doctor.StaffId">
+                        @doctor.StaffId - @doctor.StaffFirstName @doctor.StaffLastName
+                    </option>
+                }
+            </select>
+
+            <label>Date</label>
+            <input asp-for="AppointmentDate" type="date" required />
+
+            <label>Time</label>
+            <select asp-for="AppointmentTime" required>
+                <option value="08:00">08:00</option>
+                <option value="08:30">08:30</option>
+                <option value="09:00">09:00</option>
+                <option value="09:30">09:30</option>
+                <option value="10:00">10:00</option>
+                <option value="10:30">10:30</option>
+                <option value="11:00">11:00</option>
+                <option value="11:30">11:30</option>
+                <option value="12:00">12:00</option>
+                <option value="12:30">12:30</option>
+                <option value="13:00">13:00</option>
+                <option value="13:30">13:30</option>
+                <option value="14:00">14:00</option>
+                <option value="14:30">14:30</option>
+                <option value="15:00">15:00</option>
+                <option value="15:30">15:30</option>
+                <option value="16:00">16:00</option>
+                <option value="16:30">16:30</option>
+                <option value="17:00">17:00</option>
+                <option value="17:30">17:30</option>
+                <option value="18:00">18:00</option>
+                <option value="18:30">18:30</option>
+                <option value="19:00">19:00</option>
+                <option value="19:30">19:30</option>
+            </select>
+
+            <label>Status</label>
+            <select asp-for="AppointmentStatus">
+                <option value="Scheduled">Scheduled</option>
+                <option value="Emergency Scheduled">Emergency Scheduled</option>
+                <option value="Arrived">Arrived</option>
+                <option value="Rescheduled">Rescheduled</option>
+                <option value="Cancelled">Cancelled</option>
+                <option value="No Show">No Show</option>
+            </select>
+
+            <label>
+                <input asp-for="ArrivalConfirmation" type="checkbox" />
+                Arrival confirmed
+            </label>
+
+            <label>Notes</label>
+            <textarea asp-for="Notes"></textarea>
+
+            <button type="submit" class="btn btn-primary">
+                Save Changes
+            </button>
+        </form>
+    </div>
+</div>

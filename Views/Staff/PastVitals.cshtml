@@ -1,0 +1,42 @@
+﻿@model List<Hospital_Management_System.Models.Vitals>
+
+<div class="card">
+    <h2>Past Vitals</h2>
+
+    @if (Model.Any())
+    {
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Patient</th>
+                    <th>Temperature</th>
+                    <th>Blood Pressure</th>
+                    <th>Heart Rate</th>
+                    <th>Respiratory Rate</th>
+                    <th>Notes</th>
+                    <th>Nurse</th>
+                    <th>Recorded</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var vital in Model)
+                {
+                    <tr>
+                        <td>@vital.Visit.Patient.PatientFirstName @vital.Visit.Patient.PatientLastName</td>
+                        <td>@vital.Temperature</td>
+                        <td>@vital.BloodPressure</td>
+                        <td>@vital.HeartRate</td>
+                        <td>@vital.RespiratoryRate</td>
+                        <td>@vital.Notes</td>
+                        <td>@vital.Nurse?.StaffFirstName @vital.Nurse?.StaffLastName</td>
+                        <td>@vital.RecordedAt.ToString("dd/MM/yyyy HH:mm")</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <p>No saved vitals records found.</p>
+    }
+</div>

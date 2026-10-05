@@ -1,0 +1,28 @@
+﻿@model List<Hospital_Management_System.Models.LabTestResult>
+
+<div class="page">
+    <div class="card">
+        <h3>Lab Results</h3>
+
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Test</th>
+                    <th>Date</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var t in Model)
+                {
+                    <tr>
+                        <td>@t.TestType</td>
+                        <td>@t.ResultDate.ToString("dd/MM/yyyy")</td>
+                        <td>@t.Status</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

@@ -1,0 +1,119 @@
+﻿@model ReceptionistDashboardViewModel
+
+@{
+    ViewData["Title"] = "Receptionist Dashboard";
+}
+
+<div class="page">
+
+    <h2>Welcome @Model.Staff.StaffFirstName</h2>
+    <p>Staff ID: @Model.Staff.StaffId</p>
+    <p>Role: @Model.Staff.StaffRole</p>
+
+    <div class="grid">
+
+        <div class="card">
+            <h3>Work Calendar</h3>
+
+            <p>View appointments, meetings and front desk events.</p>
+
+            <a asp-action="Calendar"
+                   asp-route-id="@Model.Staff.StaffId"
+                   asp-route-userType="Staff"
+                   class="btn btn-secondary">
+                Open Calendar
+            </a>
+        </div>
+
+        <div class="card">
+            <h3>Quick Actions</h3>
+
+            <div class="quick-actions-grid mt-3">
+
+                <a asp-action="CreateAppointment"
+                       asp-route-id="@Model.Staff.StaffId"
+                       class="btn btn-primary">
+                    Create Appointment
+                </a>
+
+                <a asp-action="CreateEmergencyAppointment"
+                       asp-route-id="@Model.Staff.StaffId"
+                       class="btn btn-secondary">
+                    Emergency Appointment
+                </a>
+
+                <a asp-action="PatientLookup"
+                       asp-route-id="@Model.Staff.StaffId"
+                       class="btn btn-secondary">
+                    Register New Patient
+                </a>
+
+                <a asp-action="MyTickets"
+                       asp-route-id="@Model.Staff.StaffId"
+                       class="btn btn-primary">
+                    Ticket Manager
+                </a>
+
+            </div>
+        </div>
+
+    </div>
+
+    <div class="card">
+        <h3>Appointments</h3>
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Time</th>
+                    <th>Patient</th>
+                    <th>Doctor</th>
+                    <th>Status</th>
+                    <th>Arrival</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var appointment in Model.Appointments)
+                {
+                    <tr>
+                        <td>@appointment.AppointmentDate.ToShortDateString()</td>
+                        <td>@appointment.AppointmentTime</td>
+                        <td>@appointment.Patient.PatientFirstName @appointment.Patient.PatientLastName</td>
+                        <td>@appointment.Doctor.StaffFirstName</td>
+                        <td>@appointment.AppointmentStatus</td>
+                        <td>
+                            @if (!appointment.ArrivalConfirmation)
+                            {
+                                <form asp-action="ConfirmArrival"
+                                      asp-controller="Staff"
+                                      method="post">
+                                    <input type="hidden" name="id" value="@appointment.AppointmentId" />
+                                    <input type="hidden" name="staffId" value="@Model.Staff.StaffId" />
+                                    <button type="submit" class="btn btn-primary btn-sm">
+                                        Mark Arrived
+                                    </button>
+                                </form>
+                            }
+                            else
+                            {
+                                <span class="text-success fw-bold">Arrived</span>
+                            }
+                        </td>
+                        <td>
+                            <a asp-action="EditAppointment"
+                                   asp-route-id="@appointment.AppointmentId"
+                                   asp-route-returnUrl="@Context.Request.Path? id=@Model.Staff.StaffId"
+                                   class="btn btn-primary btn-sm">
+                                Edit
+                            </a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+    </div>
+
+</div>

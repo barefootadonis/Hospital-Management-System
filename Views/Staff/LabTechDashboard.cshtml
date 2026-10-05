@@ -1,0 +1,60 @@
+﻿@model LabTechDashboardViewModel
+
+@{
+    ViewData["Title"] = "Lab Technician Dashboard";
+}
+
+<div class="page">
+
+    <h2>Welcome @Model.Staff.StaffFirstName</h2>
+    <p>Staff ID: @Model.Staff.StaffId</p>
+    <p>Role: @Model.Staff.StaffRole</p>
+
+    <div class="grid">
+
+        <div class="card">
+            <h3>Work Calendar</h3>
+            <p>View appointments, meetings and work events.</p>
+            
+            <a asp-action="Calendar"
+                   asp-route-id="@Model.Staff.StaffId"
+                   asp-route-userType="Staff"
+                   class="btn btn-secondary">
+                Open Calendar
+            </a>
+        </div>
+
+        <div class="card">
+            <h3>Quick Actions</h3>
+
+            <div class="quick-actions-grid mt-3">
+
+                <a asp-action="UploadLabResult"
+                       asp-route-id="@Model.Staff.StaffId"
+                       class="btn btn-primary">
+                    Upload Results
+                </a>
+
+                <a asp-action="PendingLabResults"
+                       asp-route-id="@Model.Staff.StaffId"
+                       class="btn btn-secondary">
+                    Pending Results
+                </a>
+
+                <a asp-action="CompletedResults"
+                       class="btn btn-secondary">
+                    Completed Results
+                </a>
+
+                <a asp-action="MyTickets"
+                       asp-route-id="@Model.Staff.StaffId"
+                       class="btn btn-primary">
+                    Ticket Manager
+                </a>
+
+            </div>
+        </div>
+
+    </div>
+
+</div>

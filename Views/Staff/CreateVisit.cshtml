@@ -1,0 +1,34 @@
+﻿@model Hospital_Management_System.Models.Visit
+@using Hospital_Management_System.Models
+
+@{
+    var appointments = ViewBag.Appointments as List<Appointment>;
+}
+
+<div class="page">
+    <div class="card vitals-form">
+        <h2>Create Visit</h2>
+
+        <form asp-action="CreateVisit" method="post">
+            <input type="hidden" name="doctorId" value="@ViewBag.DoctorId" />
+
+            <label>Appointment / Patient</label>
+            <select asp-for="AppointmentId" required>
+                <option value="">-- Select Appointment --</option>
+                @foreach (var appointment in appointments)
+                {
+                    <option value="@appointment.AppointmentId">
+                        @appointment.AppointmentId - @appointment.Patient.PatientFirstName @appointment.Patient.PatientLastName
+                    </option>
+                }
+            </select>
+
+            <label>Visit Notes</label>
+            <textarea asp-for="Notes" placeholder="Enter visit notes..." required></textarea>
+
+            <button type="submit" class="btn btn-primary">
+                Save Visit
+            </button>
+        </form>
+    </div>
+</div>

@@ -1,0 +1,72 @@
+﻿@model List<Hospital_Management_System.Models.CalendarEvent>
+
+@{
+    ViewData["Title"] = "Calendar";
+    var today = DateTime.Today;
+    var eventsByDate = Model.GroupBy(e => e.EventDate.Date).ToDictionary(g => g.Key, g => g.ToList());
+}
+
+<div class="page">
+    <div class="card">
+        <h2>Calendar</h2>
+
+        <div class="calendar-grid">
+            @for (int i = 0; i < 14; i++)
+            {
+                var date = today.AddDays(i);
+                var hasEvents = eventsByDate.ContainsKey(date);
+
+                <a href="#day-@date.ToString("yyyyMMdd")"
+                       class="calendar-day @(hasEvents ? "calendar-day-active" : "")">
+                    <strong>@date.ToString("ddd")</strong>
+                    <span>@date.ToString("dd MMM")</span>
+                </a>
+            }
+        </div>
+    </div>
+
+    <div class="card">
+        <h3>Add Calendar Event</h3>
+
+        <form asp-action="AddCalendarEvent" method="post">
+            <input type="hidden" name="userId" value="@ViewBag.UserId" />
+            <input type="hidden" name="userType" value="@ViewBag.UserType" />
+
+            <input type="text" name="title" placeholder="Event title" required />
+            <input type="date" name="eventDate" required />
+            <input type="time" name="eventTime" required />
+            <textarea name="description" placeholder="Description"></textarea>
+
+            <button type="submit" class="btn btn-primary">
+                + Add Event
+            </button>
+        </form>
+    </div>
+
+    <div class="card">
+        <h3>Upcoming Events</h3>
+
+        @if (Model.Any())
+        {
+            @foreach (var group in Model.GroupBy(e => e.EventDate.Date).OrderBy(g => g.Key))
+            {
+                <div id="day-@group.Key.ToString("yyyyMMdd")" class="calendar-event-group">
+                    <h4>@group.Key.ToString("dddd, dd MMMM yyyy")</h4>
+
+                    @foreach (var item in group.OrderBy(e => e.EventTime))
+                    {
+                        <div class="calendar-event-row">
+                            <strong>@item.EventTime</strong>
+                            <span>@item.Title</span>
+                            <small>@item.Description</small>
+                        </div>
+                    }
+                </div>
+            }
+        }
+        else
+        {
+            <p>No work events scheduled.</p>
+        }
+    </div>
+</div>

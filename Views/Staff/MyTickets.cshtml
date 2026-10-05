@@ -1,0 +1,44 @@
+﻿@model List<Hospital_Management_System.Models.Ticket>
+
+<div class="page">
+    <div class="card">
+        <h2>My Tickets</h2>
+
+        <a asp-action="CreateTicket"
+               asp-route-id="@ViewBag.StaffId"
+               class="btn btn-primary mb-3">
+            + New Ticket
+        </a>
+
+        @if (Model.Any())
+        {
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Ticket ID</th>
+                        <th>Subject</th>
+                        <th>Priority</th>
+                        <th>Status</th>
+                        <th>Created</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var ticket in Model)
+                    {
+                        <tr>
+                            <td>@ticket.TicketId</td>
+                            <td>@ticket.Subject</td>
+                            <td>@ticket.Priority</td>
+                            <td>@ticket.Status</td>
+                            <td>@ticket.CreatedAt.ToString("dd/MM/yyyy HH:mm")</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+        else
+        {
+            <p>You have not submitted any tickets.</p>
+        }
+    </div>
+</div>

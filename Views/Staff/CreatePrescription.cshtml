@@ -1,0 +1,49 @@
+﻿@model Hospital_Management_System.Models.Prescription
+@using Hospital_Management_System.Models
+
+@{
+    var visits = ViewBag.Visits as List<Visit>;
+    var pharmacists = ViewBag.Pharmacists as List<Staff>;
+}
+
+<div class="page">
+    <div class="card vitals-form">
+        <h2>Create Prescription</h2>
+
+        <form asp-action="CreatePrescription" method="post">
+            <input type="hidden" name="doctorId" value="@ViewBag.DoctorId" />
+
+            <label>Visit / Patient</label>
+            <select asp-for="VisitId" required>
+                <option value="">-- Select Visit --</option>
+                @foreach (var visit in visits)
+                {
+                    <option value="@visit.VisitId">
+                        @visit.VisitId - @visit.Patient.PatientFirstName @visit.Patient.PatientLastName
+                    </option>
+                }
+            </select>
+
+            <label>Prescription</label>
+            <textarea asp-for="PrescriptionText" placeholder="Enter medication and dosage..." required></textarea>
+
+            <label>Pharmacist</label>
+            <select asp-for="PharmacistId" required>
+                <option value="">-- Select Pharmacist --</option>
+                @foreach (var pharmacist in pharmacists)
+                {
+                    <option value="@pharmacist.StaffId">
+                        @pharmacist.StaffFirstName @pharmacist.StaffLastName
+                    </option>
+                }
+            </select>
+
+            <label>Notes</label>
+            <textarea asp-for="Notes" placeholder="Optional notes..."></textarea>
+
+            <button type="submit" class="btn btn-primary">
+                Save Prescription
+            </button>
+        </form>
+    </div>
+</div>

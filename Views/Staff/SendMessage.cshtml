@@ -1,0 +1,50 @@
+﻿@using Hospital_Management_System.Models
+
+@{
+    var staff = ViewBag.Staff as List<Staff>;
+    var patients = ViewBag.Patients as List<Patient>;
+}
+
+<div class="page">
+    <div class="card vitals-form">
+        <h2>Send Message</h2>
+
+        <form asp-action="SendMessage" method="post">
+            <input type="hidden" name="senderId" value="@ViewBag.SenderId" />
+
+            <label>Send To</label>
+            <select name="receiverType" id="receiverType" required>
+                <option value="">-- Select Receiver Type --</option>
+                <option value="Staff">Staff Member</option>
+                <option value="Patient">Patient</option>
+                <option value="AllStaff">All Staff</option>
+            </select>
+
+            <label>Staff Receiver</label>
+            <select name="receiverId" id="staffReceiver">
+                <option value="">-- Select Staff --</option>
+                @foreach (var s in staff)
+                {
+                    <option value="@s.StaffId">@s.StaffFirstName @s.StaffLastName - @s.StaffRole</option>
+                }
+            </select>
+
+            <label>Patient Receiver</label>
+            <select name="receiverId" id="patientReceiver">
+                <option value="">-- Select Patient --</option>
+                @foreach (var p in patients)
+                {
+                    <option value="@p.PatientId">@p.PatientFirstName @p.PatientLastName</option>
+                }
+            </select>
+
+            <input name="title" placeholder="Message title" required />
+
+            <textarea name="message" placeholder="Write your message..." required></textarea>
+
+            <button type="submit" class="btn btn-primary">
+                Send Message
+            </button>
+        </form>
+    </div>
+</div>
