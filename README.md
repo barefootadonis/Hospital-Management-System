@@ -186,3 +186,71 @@ Patient
           +-- Lab Test Result
           |
           +-- Vitals
+
+# Test Accounts
+The application includes pre-created test accounts for the different user roles.
+The usernames/IDs and passwords can be found in the **database setup** and within the **`ApplicationDbContext`** file.
+All accounts and credentials are fictional test data created specifically for this project and do not contain real patient or staff information.
+These accounts can be used to test the different dashboards and role-specific functionality.
+
+# Email Configuration
+The application includes email functionality using **Gmail SMTP**.
+Real email credentials are not included in the repository. To test the email functionality locally, configure the `EmailSettings` section in `appsettings.json` using your own Gmail SMTP credentials.
+Use the following format:
+
+```json
+"EmailSettings": {
+  "Host": "smtp.gmail.com",
+  "Port": 587,
+  "EnableSsl": true,
+  "Username": "YOUR_EMAIL_ADDRESS",
+  "Password": "YOUR_EMAIL_APP_PASSWORD"
+}
+```
+
+For Gmail, an App Password should be used instead of your normal account password.
+Do not commit real passwords or other sensitive credentials to GitHub.
+
+
+# Technologies Used
+* C#
+* ASP.NET MVC
+* .NET
+* Entity Framework Core
+* MySQL
+* HTML
+* CSS
+* JavaScript
+* Visual Studio
+* Git & GitHub
+
+# Skills Demonstrated
+This project demonstrates practical experience with:
+* C# and object-oriented programming
+* ASP.NET MVC architecture
+* Entity Framework Core
+* MySQL database integration
+* CRUD operations
+* Database design and relationships
+* Role-based access and functionality
+* Authentication and session management
+* Backend development
+* Web application development
+* Form handling and validation
+* Managing connected data and workflows
+* Git and GitHub
+
+# Running the Project
+1. Clone or download the repository.
+2. Open the solution in Visual Studio.
+3. Configure a local MySQL database.
+4. Update the database connection string in `appsettings.json`.
+5. Apply the included Entity Framework Core migrations.
+6. Configure the email settings if email functionality is being tested.
+7. Build and run the application.
+8. Use one of the test accounts provided in the database setup or `ApplicationDbContext`.
+
+# Project Purpose
+This project was developed as a portfolio project to demonstrate the design and development of a database-driven, multi-role web application.
+It combines backend development, database management, MVC architecture and role-specific functionality to simulate processes within a hospital environment.
+
